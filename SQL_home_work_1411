@@ -1,0 +1,56 @@
+-- Задание 1
+select distinct c.city from city c 
+
+-- Задание 2
+select distinct c.city from city c 
+where c.city not like '% %' and c.city like 'L%a'
+
+-- Задание 3
+select * from payment p 
+where amount > 1.00 and payment_date::date between '2005-06-17' and '2005-06-19'
+order by payment_date 
+
+-- Задание 4
+select * from payment p 
+order by payment_date desc 
+limit 10
+
+-- Задание 5
+select concat_ws(' ', first_name, last_name) as "Фамилия и имя", 
+email as "Электронная почта", 
+length(email) as "Длина значения поля email", 
+last_update::date as "Дата посл. обновления" 
+from customer c 
+
+-- Задание 6
+select customer_id, lower(concat_ws(' ', first_name, last_name)), 
+activebool  from customer c
+where activebool = true 
+and first_name ilike 'kelly'
+or first_name ilike 'willie'
+
+-- Дополнительная часть
+-- Задание 1
+select * from film f 
+where (rating = 'R' and rental_rate between 0.00 and 3.00)
+or (rating = 'PG-13' and rental_rate >= 4.00)
+
+-- Задание 2
+select * from film f
+order by length(description) desc
+limit 3
+
+-- Задание 3
+select email, 
+substring(email, 1 , position ('@' in email) - 1) as "before_@", 
+substring(email, position ('@' in email) + 1, length(email)) as "after_@" 
+from customer c 
+
+-- Задание 4
+select email, 
+concat(upper(substring(substring(email, 1 , position ('@' in email) - 1), 1, 1)),
+lower(substring(substring(email, 1 , position ('@' in email) - 1), 2, length(email)))) as "Before_@",
+concat(upper(substring(substring(email, position ('@' in email) + 1, length(email)), 1, 1)),
+lower(substring(substring(email, position ('@' in email) + 1, length(email)), 2, length(email)))) as "Asfter_@"
+from customer c 
+
